@@ -22,7 +22,8 @@ public class RuntimeLogGUI : MonoBehaviour
 
     void OnGUI()
     {
-        GUI.Label(new Rect(5, 5, Screen.width - 10, Screen.height - 10), log);
+        const float padding = 10f;
+        GUI.Label(new Rect(padding * 0.5f, padding * 0.5f, Screen.width - padding, Screen.height - padding), log);
     }
 
     void Log(string logString, string stackTrace, LogType type)
