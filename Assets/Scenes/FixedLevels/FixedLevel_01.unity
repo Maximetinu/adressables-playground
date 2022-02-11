@@ -218,6 +218,7 @@ GameObject:
   - component: {fileID: 501941899}
   - component: {fileID: 501941898}
   - component: {fileID: 501941897}
+  - component: {fileID: 501941901}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -301,6 +302,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &501941901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 501941896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68247388696243d4ab9b563152b50964, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  direction: {x: 0, y: 0, z: 1}
+  speed: 5
+  offset: 0
+  amplitude: 2
 --- !u!1 &559305814
 GameObject:
   m_ObjectHideFlags: 0
@@ -313,6 +330,7 @@ GameObject:
   - component: {fileID: 559305817}
   - component: {fileID: 559305816}
   - component: {fileID: 559305815}
+  - component: {fileID: 559305819}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -396,6 +414,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &559305819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 559305814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68247388696243d4ab9b563152b50964, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  direction: {x: 0, y: 0, z: 1}
+  speed: 5
+  offset: 2
+  amplitude: 2
 --- !u!1 &837217506
 GameObject:
   m_ObjectHideFlags: 0
@@ -501,6 +535,7 @@ GameObject:
   - component: {fileID: 1772597325}
   - component: {fileID: 1772597324}
   - component: {fileID: 1772597323}
+  - component: {fileID: 1772597327}
   m_Layer: 0
   m_Name: Cylinder
   m_TagString: Untagged
@@ -585,6 +620,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1772597327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1772597322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68247388696243d4ab9b563152b50964, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  direction: {x: 0, y: 0, z: 1}
+  speed: 5
+  offset: 4
+  amplitude: 2
 --- !u!1 &1797910037
 GameObject:
   m_ObjectHideFlags: 0
