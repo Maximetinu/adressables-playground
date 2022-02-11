@@ -12,7 +12,8 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         if (!LazyInitializeSingleton()) return;
-        PrintUserInfo(gameObject.scene.name);
+        Debug.Log($"Press [SPACE BAR] to see a list of available scenes.");
+        PrintSceneLoaded(gameObject.scene.name);
         SceneManager.sceneLoaded += OnSceneLoaded;
         CacheAvailableScenes();
     }
@@ -34,8 +35,7 @@ public class GameManager : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
     {
-        if (scene.name == "DontDestroyOnLoad") return;
-        PrintUserInfo(scene.name);
+        PrintSceneLoaded(scene.name);
     }
 
     // Load all possible scenes
@@ -58,10 +58,9 @@ public class GameManager : MonoBehaviour
         }
     }
     
-    void PrintUserInfo(string sceneName)
+    void PrintSceneLoaded(string sceneName)
     {
         Debug.Log($"Scene {sceneName} loaded");
-        Debug.Log($"Press [SPACE BAR] to see a list of available scenes.");
     }
 
     int GetNumberPressed()
@@ -86,7 +85,7 @@ public class GameManager : MonoBehaviour
         {
             int selectedSceneIndex = GetNumberPressed();
             var selectedScenePath = scenes[selectedSceneIndex];
-            Debug.Log($"Loading scene {selectedScenePath}...");
+            Debug.Log($"Loading scene {selectedScenePath}...\n");
             SceneManager.LoadScene(selectedSceneIndex);
         }
     }

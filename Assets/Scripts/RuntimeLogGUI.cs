@@ -23,11 +23,14 @@ public class RuntimeLogGUI : MonoBehaviour
     void OnGUI()
     {
         const float padding = 10f;
-        GUI.Label(new Rect(padding * 0.5f, padding * 0.5f, Screen.width - padding, Screen.height - padding), log);
+        GUIStyle style = new GUIStyle();
+        style.alignment = TextAnchor.LowerLeft;
+        style.normal.textColor = Color.white;
+        GUI.Label(new Rect(padding * 0.5f, padding * 0.5f, Screen.width - padding, Screen.height - padding), log, style);
     }
 
     void Log(string logString, string stackTrace, LogType type)
     {
-        log = logString + "\n" + log;
+        log =  log + "\n" + logString;
     }
 }
