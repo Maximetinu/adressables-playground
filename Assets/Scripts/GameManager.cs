@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    static Dictionary<int, string> scenes;
+    static Dictionary<int, string> scenes = new Dictionary<int, string>();
 
     public static GameManager Instance;
     
@@ -42,7 +42,6 @@ public class GameManager : MonoBehaviour
     // at this point we'll need to check for adressable scenes
     void CacheAvailableScenes()
     {
-        scenes = new Dictionary<int, string>();
         for (int i = 0; i < SceneManager.sceneCountInBuildSettings; i++)
         {
             scenes.Add(i, SceneUtility.GetScenePathByBuildIndex(i));
