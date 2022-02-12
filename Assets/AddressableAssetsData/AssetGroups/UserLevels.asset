@@ -29,6 +29,10 @@ MonoBehaviour:
     m_Address: Assets/Scenes/UserLevels/UserLevel_02.unity
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: bfe046767b5ba124b993609dde6c9bb7
+    m_Address: Assets/Scenes/UserLevels/UserLevelsSet.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 9b5146f1a03e6f94a82016307181e532, type: 2}
   m_SchemaSet:

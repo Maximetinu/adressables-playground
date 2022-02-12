@@ -1,15 +1,18 @@
+using System;
 using System.IO;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.AddressableAssets;
 
 public class GameManager : MonoBehaviour
 {
-    static Dictionary<int, string> scenes = new Dictionary<int, string>();
+    static Dictionary<int, (string sceneName, string sceneArg, Action<string> loadSceneFunc)> scenes = new Dictionary<int, (string, string, Action<string>)>();
 
     public static GameManager Instance;
 
     public SceneReference[] baseGameLevels;
+    public AssetReferenceT<UserLevelsSet> userLevelsSetAssetReference;
 
     void Start()
     {
@@ -46,7 +49,13 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < baseGameLevels.Length; i++)
         {
-            scenes.Add(i, baseGameLevels[i].ScenePath);
+            scenes.Add(i, (Path.GetFileNameWithoutExtension(baseGameLevels[i].ScenePath), baseGameLevels[i].ScenePath, SceneManager.LoadScene));
+        }
+
+        UserLevelsSet userLevelsSet = userLevelsSetAssetReference.LoadAssetAsync<UserLevelsSet>().WaitForCompletion();
+        for (int i = 0; i < userLevelsSet.userLevelSceneReferences.Length; i++)
+        {
+            scenes.Add(i + baseGameLevels.Length, (userLevelsSet.userLevelSceneReferences[i].editorAsset.name, (string)userLevelsSet.userLevelSceneReferences[i].RuntimeKey, (string n) => Addressables.LoadSceneAsync(n)));
         }
     }
 
@@ -55,7 +64,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Press a number key to load a scene:");
         foreach (var scn in scenes)
         {
-            Debug.Log($"[{scn.Key}] --> {Path.GetFileNameWithoutExtension(scn.Value)}");
+            Debug.Log($"[{scn.Key}] --> {Path.GetFileNameWithoutExtension(scn.Value.sceneName)}");
         }
     }
     
@@ -85,9 +94,9 @@ public class GameManager : MonoBehaviour
         if (scenes.ContainsKey(GetNumberPressed()))
         {
             int selectedSceneIndex = GetNumberPressed();
-            var selectedScenePath = scenes[selectedSceneIndex];
-            Debug.Log($"Loading scene {selectedScenePath}...\n");
-            SceneManager.LoadScene(selectedSceneIndex);
+            var selectedScene = scenes[selectedSceneIndex];
+            Debug.Log($"Loading scene {selectedScene.sceneName}...\n");
+            selectedScene.loadSceneFunc(selectedScene.sceneArg);
         }
     }
 }
