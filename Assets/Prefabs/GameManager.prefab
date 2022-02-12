@@ -43,3 +43,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02b3d2f4843a8c644b29b9a0c2a953de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  baseGameLevels:
+  - sceneAsset: {fileID: 102900000, guid: 9fc0d4010bbf28b4594072e72b8655ab, type: 3}
+    scenePath: Assets/Scenes/MainMenu.unity
+  - sceneAsset: {fileID: 102900000, guid: 124f9bc14bd7f8844b778340ad9a802f, type: 3}
+    scenePath: Assets/Scenes/FixedLevels/FixedLevel_00.unity
+  - sceneAsset: {fileID: 102900000, guid: 78068493bf5809048b518ed03578fb79, type: 3}
+    scenePath: Assets/Scenes/FixedLevels/FixedLevel_01.unity
+  - sceneAsset: {fileID: 102900000, guid: 34a39ce8c7b34b743b75e0a52640f570, type: 3}
+    scenePath: Assets/Scenes/FixedLevels/FixedLevel_02.unity

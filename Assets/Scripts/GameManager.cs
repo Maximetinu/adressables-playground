@@ -8,7 +8,9 @@ public class GameManager : MonoBehaviour
     static Dictionary<int, string> scenes = new Dictionary<int, string>();
 
     public static GameManager Instance;
-    
+
+    public SceneReference[] baseGameLevels;
+
     void Start()
     {
         if (!LazyInitializeSingleton()) return;
@@ -42,9 +44,9 @@ public class GameManager : MonoBehaviour
     // at this point we'll need to check for adressable scenes
     void CacheAvailableScenes()
     {
-        for (int i = 0; i < SceneManager.sceneCountInBuildSettings; i++)
+        for (int i = 0; i < baseGameLevels.Length; i++)
         {
-            scenes.Add(i, SceneUtility.GetScenePathByBuildIndex(i));
+            scenes.Add(i, baseGameLevels[i].ScenePath);
         }
     }
 
