@@ -7,6 +7,7 @@ using UnityEngine.AddressableAssets;
 
 public class GameManager : MonoBehaviour
 {
+    // number key to load - readable scene name - string argument that the load scene function is expecting - function to load scenes (SceneManager.LoadScene for standard scenes, Addressables.LoadScene for addressable scenes)
     static Dictionary<int, (string sceneName, string sceneArg, Action<string> loadSceneFunc)> scenes = new Dictionary<int, (string, string, Action<string>)>();
 
     public static GameManager Instance;
@@ -43,8 +44,6 @@ public class GameManager : MonoBehaviour
         PrintSceneLoaded(scene.name);
     }
 
-    // Load all possible scenes
-    // at this point we'll need to check for adressable scenes
     void CacheAvailableScenes()
     {
         for (int i = 0; i < baseGameLevels.Length; i++)
@@ -53,9 +52,9 @@ public class GameManager : MonoBehaviour
         }
 
         UserLevelsSet userLevelsSet = userLevelsSetAssetReference.LoadAssetAsync<UserLevelsSet>().WaitForCompletion();
-        for (int i = 0; i < userLevelsSet.userLevelSceneReferences.Length; i++)
+        for (int i = 0; i < userLevelsSet.Count; i++)
         {
-            scenes.Add(i + baseGameLevels.Length, (userLevelsSet.userLevelSceneReferences[i].editorAsset.name, (string)userLevelsSet.userLevelSceneReferences[i].RuntimeKey, (string n) => Addressables.LoadSceneAsync(n)));
+            scenes.Add(i + baseGameLevels.Length, (userLevelsSet.GetSceneName(i), userLevelsSet.GetSceneAddressableArg(i), userLevelsSet.LoadSceneFunc));
         }
     }
 
