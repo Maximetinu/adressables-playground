@@ -7,6 +7,10 @@
 UserSettings/
 Assets/AssetStoreTools*
 
+# Adressables
+Assets/AddressableAssetsData/Windows/*
+Assets/AddressableAssetsData/Windows.meta
+
 # Visual Studio cache directory
 .vs/
 
