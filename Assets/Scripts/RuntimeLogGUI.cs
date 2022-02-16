@@ -5,7 +5,10 @@ public class RuntimeLogGUI : MonoBehaviour
     [RuntimeInitializeOnLoadMethod]
     static void Initialize()
     {
-        GameObject.DontDestroyOnLoad(new GameObject("Log GUI").AddComponent<RuntimeLogGUI>());
+        GameObject logGuiObj = new GameObject("Log GUI");
+        logGuiObj.AddComponent<RuntimeLogGUI>();
+        logGuiObj.hideFlags = HideFlags.HideInHierarchy;
+        GameObject.DontDestroyOnLoad(logGuiObj);
     }
     
     string log;
