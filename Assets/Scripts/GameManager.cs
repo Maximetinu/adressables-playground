@@ -7,7 +7,7 @@ using UnityEngine.AddressableAssets;
 
 public class GameManager : MonoBehaviour
 {
-    // number key to load - readable scene name - string argument that the load scene function is expecting - function to load scenes (SceneManager.LoadScene for standard scenes, Addressables.LoadScene for addressable scenes)
+    // number key to load - readable scene name - function to load scenes
     static Dictionary<int, (string sceneName, Action loadScene)> scenes = new Dictionary<int, (string, Action)>();
 
     public static GameManager Instance;

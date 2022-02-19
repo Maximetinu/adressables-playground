@@ -1,7 +1,8 @@
-using System;
-using System.Text.RegularExpressions;
+using System.IO;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.ResourceLocations;
 
 [CreateAssetMenu()]
 public class UserLevelsSet : ScriptableObject
@@ -11,18 +12,29 @@ public class UserLevelsSet : ScriptableObject
 
     public int Count => userLevelSceneReferences.Length;
 
+    string[] sceneNames;
+
+    // Initialize Adressables and cache adressable scene names
+    void OnEnable()
+    {
+        var resourceLocator = Addressables.InitializeAsync().WaitForCompletion();
+        sceneNames = new string[userLevelSceneReferences.Length];
+        for (int i = 0; i < userLevelSceneReferences.Length; i++)
+        {
+            IList<IResourceLocation> locs;
+            resourceLocator.Locate(userLevelSceneReferences[i].AssetGUID, typeof(UnityEngine.ResourceManagement.ResourceProviders.SceneInstance), out locs);
+            sceneNames[i] = Path.GetFileNameWithoutExtension(locs[0].PrimaryKey);
+        }
+    }
+
     public void LoadScene(int i)
     {
         Addressables.LoadSceneAsync(GetSceneAddressableArg(i));
     }
 
-    // regex to extract "UserLevel_00" from "[f895eda0324951e43b3b2b97e08cfdfd]UserLevel_00 (UnityEngine.SceneAsset)"
-    // this has to be possible with Addressables API, but I didn't find how
     public string GetSceneName(int i)
     {
-        AssetReference sceneRef = userLevelSceneReferences[i];
-        string guid_sceneName_type = sceneRef.ToString();
-        return Regex.Match(guid_sceneName_type, @"(?<=\]).*?(?= \()").Value;
+        return sceneNames[i];
     }
 
     private string GetSceneAddressableArg(int i)
