@@ -52,7 +52,6 @@ public class GameManager : MonoBehaviour
             scenes.Add(i, (Path.GetFileNameWithoutExtension(scenePath), () => SceneManager.LoadScene(scenePath)));
         }
 
-
         UserLevelsSet userLevelsSet = userLevelsSetAssetReference.LoadAssetAsync<UserLevelsSet>().WaitForCompletion();
         for (int i = 0; i < userLevelsSet.Count; i++)
         {
