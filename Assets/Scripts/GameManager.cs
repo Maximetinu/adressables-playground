@@ -52,15 +52,13 @@ public class GameManager : MonoBehaviour
             scenes.Add(i, (Path.GetFileNameWithoutExtension(scenePath), () => SceneManager.LoadScene(scenePath)));
         }
 
-        userLevelsSetAssetReference.LoadAssetAsync<UserLevelsSet>().Completed += (asyncHandler) =>
+
+        UserLevelsSet userLevelsSet = userLevelsSetAssetReference.LoadAssetAsync<UserLevelsSet>().WaitForCompletion();
+        for (int i = 0; i < userLevelsSet.Count; i++)
         {
-            UserLevelsSet userLevelsSet = asyncHandler.Result;
-            for (int i = 0; i < userLevelsSet.Count; i++)
-            {
-                int j = i; // capture variable for lambda https://stackoverflow.com/a/451783
-                scenes.Add(i + baseGameLevels.Length, (userLevelsSet.GetSceneName(j), () => userLevelsSet.LoadScene(j)));
-            }
-        };
+            int j = i; // capture variable for lambda https://stackoverflow.com/a/451783
+            scenes.Add(i + baseGameLevels.Length, (userLevelsSet.GetSceneName(j), () => userLevelsSet.LoadScene(j)));
+        }
     }
 
     void PrintSceneNavigation()
