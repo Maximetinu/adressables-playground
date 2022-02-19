@@ -8,7 +8,7 @@ using UnityEngine.AddressableAssets;
 public class GameManager : MonoBehaviour
 {
     // number key to load - readable scene name - string argument that the load scene function is expecting - function to load scenes (SceneManager.LoadScene for standard scenes, Addressables.LoadScene for addressable scenes)
-    static Dictionary<int, (string sceneName, string sceneArg, Action<string> loadSceneFunc)> scenes = new Dictionary<int, (string, string, Action<string>)>();
+    static Dictionary<int, (string sceneName, Action loadScene)> scenes = new Dictionary<int, (string, Action)>();
 
     public static GameManager Instance;
 
@@ -48,14 +48,19 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < baseGameLevels.Length; i++)
         {
-            scenes.Add(i, (Path.GetFileNameWithoutExtension(baseGameLevels[i].ScenePath), baseGameLevels[i].ScenePath, SceneManager.LoadScene));
+            string scenePath = baseGameLevels[i].ScenePath;
+            scenes.Add(i, (Path.GetFileNameWithoutExtension(scenePath), () => SceneManager.LoadScene(scenePath)));
         }
 
-        UserLevelsSet userLevelsSet = userLevelsSetAssetReference.LoadAssetAsync<UserLevelsSet>().WaitForCompletion();
-        for (int i = 0; i < userLevelsSet.Count; i++)
+        userLevelsSetAssetReference.LoadAssetAsync<UserLevelsSet>().Completed += (asyncHandler) =>
         {
-            scenes.Add(i + baseGameLevels.Length, (userLevelsSet.GetSceneName(i), userLevelsSet.GetSceneAddressableArg(i), userLevelsSet.LoadSceneFunc));
-        }
+            UserLevelsSet userLevelsSet = asyncHandler.Result;
+            for (int i = 0; i < userLevelsSet.Count; i++)
+            {
+                int j = i; // capture variable for lambda https://stackoverflow.com/a/451783
+                scenes.Add(i + baseGameLevels.Length, (userLevelsSet.GetSceneName(j), () => userLevelsSet.LoadScene(j)));
+            }
+        };
     }
 
     void PrintSceneNavigation()
@@ -95,7 +100,7 @@ public class GameManager : MonoBehaviour
             int selectedSceneIndex = GetNumberPressed();
             var selectedScene = scenes[selectedSceneIndex];
             Debug.Log($"Loading scene {selectedScene.sceneName}...\n");
-            selectedScene.loadSceneFunc(selectedScene.sceneArg);
+            selectedScene.loadScene();
         }
     }
 }

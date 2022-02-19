@@ -6,9 +6,15 @@ using UnityEngine.AddressableAssets;
 [CreateAssetMenu()]
 public class UserLevelsSet : ScriptableObject
 {
+    [SerializeField]
+    AssetReference[] userLevelSceneReferences;
+
     public int Count => userLevelSceneReferences.Length;
 
-    public Action<string> LoadSceneFunc => (string scn) => Addressables.LoadSceneAsync(scn);
+    public void LoadScene(int i)
+    {
+        Addressables.LoadSceneAsync(GetSceneAddressableArg(i));
+    }
 
     // regex to extract "UserLevel_00" from "[f895eda0324951e43b3b2b97e08cfdfd]UserLevel_00 (UnityEngine.SceneAsset)"
     // this has to be possible with Addressables API, but I didn't find how
@@ -19,11 +25,8 @@ public class UserLevelsSet : ScriptableObject
         return Regex.Match(guid_sceneName_type, @"(?<=\]).*?(?= \()").Value;
     }
 
-    public string GetSceneAddressableArg(int i)
+    private string GetSceneAddressableArg(int i)
     {
         return (string)userLevelSceneReferences[i].RuntimeKey;
     }
-
-    [SerializeField]
-    AssetReference[] userLevelSceneReferences;
 }
